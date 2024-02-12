@@ -1,6 +1,5 @@
 const { chatGPTResponse } = require('../services/openai'); // Adjust the path as necessary
 
-// Assuming calculateDateDiff and getPaceLabel are defined here or imported
 const calculateDateDiff = (startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -16,10 +15,9 @@ const getPaceLabel = (pace) => {
   return paceMapping[pace] || 'moderately-paced';
 };
 
-// generatePrompt moved here for clarity and to ensure it has access to helper functions
 const generatePrompt = (req) => {
-  const { country, endDate, pace, startDate, travelers } = req.body;
-  return `Plan a ${calculateDateDiff(startDate, endDate)} days trip to ${country} for ${travelers} people, pace should be ${getPaceLabel(pace)} and give me an overall cost estimate at the end.`;
+  const { destination, source, endDate, pace, startDate, travelers } = req.body;
+  return `Plan a ${calculateDateDiff(startDate, endDate)} days trip to ${destination}  from ${source} for ${travelers} people, pace should be ${getPaceLabel(pace)} and give me an overall cost estimate at the end.`;
 };
 
 // Controller function to handle the request
