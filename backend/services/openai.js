@@ -1,24 +1,23 @@
 const { OpenAI } = require('openai');
+const { chatgptKey } = require('../config/vars');
 
 const openAi = new OpenAI({
-  apiKey: process.env.CHATGPT_KEY,
+  apiKey: chatgptKey,
 });
 
-exports.chatGPTResponse = async (prompt) => {
+exports.chatGPTResponse = async (prompt, openaiConfig) => {
   try {
-    const response = await openAi.completions.create({
-      model: 'text-davinci-003',
-      prompt: prompt,
-      temperature: 0.6,
-      max_tokens: 2048,
+    console.log(openaiConfig, prompt);
+    const response = await openAi.chat.completions.create({
+      ...openaiConfig,
+      messages: [{
+        role: "user",
+        content: prompt
+      }]
     });
-
-    if (Options && Options[response.data.choices[0].text]) {
-      return Options[response.data.choices[0].text];
-    }
-    return response.data.choices[0].text;
+    return response.choices[0].message;
   } catch (err) {
-    return prompt;
-  //  throw new Error('There is an issue processing the request, please try again!');
+    console.log(err);
+    return "couldn't process the request now! please try again later!!";
   }
 };
