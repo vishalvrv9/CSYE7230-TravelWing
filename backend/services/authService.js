@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const admin = require('firebase-admin');
-const User = require('../models/userModel'); // Adjust path as necessary
+const User = require('../models/userModel');
 
 const createUser = async (email, password, fname, lname) => {
   const userResponse = await admin.auth().createUser({
