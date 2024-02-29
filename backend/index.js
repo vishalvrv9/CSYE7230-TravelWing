@@ -1,17 +1,25 @@
 require('dotenv').config();
 const { port, env } = require('./config/vars');
 const app = require('./config/express');
+const bcrypt = require('bcryptjs');
 const mongoose = require('./config/mongoose');
 const express = require('express');
 const path = require('path');
+const admin = require('firebase-admin');
+const serviceAccount = require('./config/serviceAccountKey.json');
+const User = require('./models/userModel');
+const authRoutes = require('./routes/auth/authRoutes');
 
+// Firebase Admin SDK
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
-const uri = process.env.MONGODB_URI;
+// connect to mongo db
+mongoose.connect(process.env.MONGODB_URI);
 
-// open mongoose connection
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connection successful'))
-  .catch((err) => console.error('MongoDB connection error:', err));
+// Use auth routes
+app.use('/auth', authRoutes);
 
 
 // listen to requests
