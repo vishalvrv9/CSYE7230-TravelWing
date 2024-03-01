@@ -9,6 +9,7 @@ const admin = require('firebase-admin');
 const serviceAccount = require('./config/serviceAccountKey.json');
 const User = require('./models/userModel');
 const authRoutes = require('./routes/auth/authRoutes');
+const hotelRoutes = require('./routes/hotelRoutes');
 
 // Firebase Admin SDK
 admin.initializeApp({
@@ -21,10 +22,9 @@ mongoose.connect(process.env.MONGODB_URI);
 // Use auth routes
 app.use('/auth', authRoutes);
 
-
 // listen to requests
 app.listen(port, () => console.log(`Server started on port ${port} (${env})`));
- 
 
+app.use('/api/hotels', hotelRoutes);
 
 module.exports = app;
