@@ -35,6 +35,29 @@ const searchHotelsByCity = async (cityCode) => {
   }
 };
 
+const searchFlights = async (
+  originLocationCode,
+  destinationLocationCode,
+  departureDate,
+  adults
+) => {
+  const accessToken = await getAccessToken();
+  try {
+    const response = await axios({
+      method: 'get',
+      url: `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error searching flights:', error);
+    throw error;
+  }
+};
+
 module.exports = {
   searchHotelsByCity,
+  searchFlights,
 };

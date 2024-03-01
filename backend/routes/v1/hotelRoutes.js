@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { searchHotelsByCity } = require('../services/amadeusService');
+const { searchHotelsByCity } = require('../../services/amadeusService');
 
 router.get('/search-by-city/:cityCode', async (req, res) => {
   try {
