@@ -20,4 +20,16 @@ router
      */
   .post(validate(itinerary), controller.fetchItinerary);
 
+
+router
+  .route('/createItinerary')
+/**
+     * @api {post} api/v1/createItinerary
+     * @apiDescription process the query received by user and return the response
+     * @apiVersion 1.0.0
+     * @apiName auth generate TODO
+     * @apiGroup auth
+     */
+  .post(validate(itinerary), controller.createItinerary);
+  
 module.exports = router;

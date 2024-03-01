@@ -10,7 +10,8 @@ module.exports = {
             endDate: Joi.date().greater(Joi.ref('startDate')).required(),
             pace: Joi.string().required(),
             startDate: Joi.date().required(),
-            travelers: Joi.number().integer().min(1).required()
+            travelers: Joi.number().integer().min(1).required(),
+            userId: Joi.string()
           })
     },
 }
