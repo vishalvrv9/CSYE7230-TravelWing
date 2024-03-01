@@ -5,13 +5,13 @@ const expect = _expect;
 
 use(chaiHttp);
 
-import app from '../app.js'
+import app from '../backend/index.js'
 
 describe('API Tests', ()=>{
 
     it('',(done) => {
         chai.request(app)
-        .get('/healthz')
+        .get('/api/health')
         .end((err,res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
