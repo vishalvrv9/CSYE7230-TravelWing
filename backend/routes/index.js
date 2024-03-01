@@ -11,6 +11,10 @@ const auth = require('../controllers/auth.controller');
 router.get('/api/health', (req, res) => res.send({ status: 'OK' }));
 router.post('/signup', auth.signup);
 router.post('/login', auth.signin);
+// /deleteUserIternary
+// /getIternaryById
+// router.get('/getIternary',checktoken,)
+// router.get('deleteIternaryID',checktoken,)
 router.use(routesV1);
 
 
