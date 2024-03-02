@@ -24,4 +24,4 @@ jobs:
 
     - name: Run Tests
       if: ${{ failure() == false }}
-      run: npm test
+      run: npm test --prefix ./backend
