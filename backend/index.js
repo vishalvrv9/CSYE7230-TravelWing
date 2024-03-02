@@ -1,13 +1,8 @@
-require('dotenv').config();
-const { port, env } = require('./config/vars');
+const { port, env, uri } = require('./config/vars');
 const app = require('./config/express');
-const bcrypt = require('bcryptjs');
 const mongoose = require('./config/mongoose');
-const express = require('express');
-const path = require('path');
 const admin = require('firebase-admin');
 const serviceAccount = require('./config/serviceAccountKey.json');
-const User = require('./models/userModel');
 const authRoutes = require('./routes/auth/authRoutes');
 const hotelRoutes = require('./routes/v1/hotelRoutes');
 const flightRoutes = require('./routes/v1/flightRoutes');

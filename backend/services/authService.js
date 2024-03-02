@@ -20,8 +20,7 @@ const createUser = async (email, password, fname, lname) => {
   });
 
   await newUser.save();
-
-  return userResponse;
+  return { userResponse, newUser};
 };
 
 const loginUser = async ({ email, password }) => {

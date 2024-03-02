@@ -1,39 +1,15 @@
-const mongoose = require("mongoose");
+const { logger } = require('../config/logger');
+const { ItineraryGenerator, Gpt4Strategy } = require('../utils/modelStrategy');
 const Itinerary = require("../models/itineraryModel");
 
-const { chatGPTResponse } = require("../services/openai"); // Adjust the path as necessary
-
-const calculateDateDiff = (startDate, endDate) => {
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  return Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-};
-
-const getPaceLabel = (pace) => {
-  const paceMapping = {
-    fast: "fast-paced",
-    medium: "moderately-paced",
-    slow: "relaxed-paced",
-  };
-  return paceMapping[pace] || "moderately-paced";
-};
-
-const generatePrompt = (req) => {
-  const { destination, source, endDate, pace, startDate, travelers } = req.body;
-  return `Plan a ${calculateDateDiff(
-    startDate,
-    endDate
-  )} days trip to ${destination}  from ${source} for ${travelers} people, pace should be ${getPaceLabel(
-    pace
-  )} and give me an overall cost estimate at the end.`;
-};
 
 // Controller function to handle the request
 exports.fetchItinerary = async (req, res) => {
   try {
-    const prompt = generatePrompt(req);
-    const response = await chatGPTResponse(prompt); // Adjusted to pass prompt directly
+    const itinerary = new ItineraryGenerator(new Gpt4Strategy(req));
+    const response = await itinerary.generate();
     if (response) {
+      logger.info('Fetched the info successfully', response);
       res.json({ success: true, itinerary: response });
     } else {
       res
@@ -66,7 +42,7 @@ exports.createItinerary = async (req, res) => {
 // Get itinerary by itinerary ID
 exports.getItineraryByItineraryId = async (req, res) => {
   try {
-    const itinerary = await Itinerary.findById(req.params.itineraryId);
+    const itinerary = await Itinerary.findOne({itineraryId :  req.params.itineraryId});
 
     if (!itinerary) {
       return res.status(404).json({

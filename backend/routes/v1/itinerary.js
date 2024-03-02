@@ -4,7 +4,7 @@ const { celebrate: validate } = require("celebrate");
 
 const router = express.Router();
 
-const { itinerary } = require("../../validations/itinerary");
+const { itinerary, itineraryPost } = require("../../validations/itinerary");
 
 router
   .route("/generateItinerary")
@@ -26,7 +26,7 @@ router
    * @apiName auth generate TODO
    * @apiGroup auth
    */
-  .post(validate(itinerary), controller.createItinerary);
+  .post(validate(itineraryPost), controller.createItinerary);
 
 router
   .route("/itineraries/:itineraryId")

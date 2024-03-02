@@ -3,8 +3,8 @@ const authService = require('../services/authService');
 const signup = async (req, res) => {
   try {
     const { email, password, fname, lname } = req.body;
-    const userResponse = await authService.createUser(email, password, fname, lname);
-    res.status(200).send(userResponse);
+    const { userResponse, newUser } = await authService.createUser(email, password, fname, lname);
+    res.status(200).send( {userResponse, newUser });
   } catch (error) {
     console.error('Signup error:', error);
     res.status(500).send({ message: 'Error creating user', error: error.message });
