@@ -1,8 +1,8 @@
 const { OpenAI } = require('openai');
 
-const openAi = new OpenAI({
-  apiKey: process.env.CHATGPT_KEY,
-});
+// const openAi = new OpenAI({
+//   apiKey: process.env.CHATGPT_KEY,
+// });
 
 exports.chatGPTResponse = async (prompt) => {
   try {
