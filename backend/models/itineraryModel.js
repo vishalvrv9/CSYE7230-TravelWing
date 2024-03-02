@@ -30,7 +30,11 @@ const itinerarySchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }   
+    },
+    generatediItinerary : {
+        type: String,
+        required: [true, 'itinerary is required']
+    }, 
 }, { timestamps: true });
 
 const Itinerary = mongoose.model('Itinerary', itinerarySchema);

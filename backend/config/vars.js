@@ -11,5 +11,6 @@ module.exports = {
   appName: appPackage.name,
   port: process.env.PORT,
   env: process.env.NODE_ENV,
-  chatgptKey: process.env.CHATGPT_KEY
+  chatgptKey: process.env.CHATGPT_KEY,
+  uri: process.env.MONGODB_URI,
 };
