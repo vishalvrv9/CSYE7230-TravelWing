@@ -1,7 +1,9 @@
 const { logger } = require('../config/logger');
 const { ItineraryGenerator, Gpt4Strategy } = require('../utils/modelStrategy');
+const Itinerary = require("../models/itineraryModel");
 
 
+// Controller function to handle the request
 exports.fetchItinerary = async (req, res) => {
   try {
     const itinerary = new ItineraryGenerator(new Gpt4Strategy(req));
@@ -10,13 +12,74 @@ exports.fetchItinerary = async (req, res) => {
       logger.info('Fetched the info successfully', response);
       res.json({ success: true, itinerary: response });
     } else {
-      res.status(404).json({ success: false, message: 'Itinerary could not be generated.' });
+      res
+        .status(404)
+        .json({ success: false, message: "Itinerary could not be generated." });
     }
   } catch (error) {
-    logger.error('Error fetching itinerary: ', error);
+    console.error("Error fetching itinerary: ", error);
     res.status(500).json({
       success: false,
-      message: 'An error occurred while processing your request.',
+      message: "An error occurred while processing your request.",
+    });
+  }
+};
+
+exports.createItinerary = async (req, res) => {
+  try {
+    const itinerary = new Itinerary(req.body);
+    await itinerary.save();
+    res.status(201).json({ success: true, itinerary });
+  } catch (error) {
+    console.error("Error creating itinerary: ", error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while processing your request.",
+    });
+  }
+};
+
+// Get itinerary by itinerary ID
+exports.getItineraryByItineraryId = async (req, res) => {
+  try {
+    const itinerary = await Itinerary.findOne({itineraryId :  req.params.itineraryId});
+
+    if (!itinerary) {
+      return res.status(404).json({
+        success: false,
+        message: "Itinerary not found"
+      });
+    }
+
+    res.json({
+      success: true,
+      itinerary
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
+};
+
+// Get itineraries by user ID
+exports.getItinerariesByUserId = async (req, res) => {
+  try {
+    const itineraries = await Itinerary.find({ userId: req.params.userId });
+
+    res.json({
+      success: true,
+      itineraries
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
     });
   }
 };
