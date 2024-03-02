@@ -3,14 +3,6 @@ const Itinerary = require("../models/itineraryModel");
 
 const { chatGPTResponse } = require("../services/openai"); // Adjust the path as necessary
 
-mongoose
-  .connect("mongodb://localhost:27017/travelwing", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Could not connect to MongoDB", err));
-
 const calculateDateDiff = (startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
@@ -67,6 +59,51 @@ exports.createItinerary = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "An error occurred while processing your request.",
+    });
+  }
+};
+
+// Get itinerary by itinerary ID
+exports.getItineraryByItineraryId = async (req, res) => {
+  try {
+    const itinerary = await Itinerary.findById(req.params.itineraryId);
+
+    if (!itinerary) {
+      return res.status(404).json({
+        success: false,
+        message: "Itinerary not found"
+      });
+    }
+
+    res.json({
+      success: true,
+      itinerary
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
+};
+
+// Get itineraries by user ID
+exports.getItinerariesByUserId = async (req, res) => {
+  try {
+    const itineraries = await Itinerary.find({ userId: req.params.userId });
+
+    res.json({
+      success: true,
+      itineraries
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
     });
   }
 };
