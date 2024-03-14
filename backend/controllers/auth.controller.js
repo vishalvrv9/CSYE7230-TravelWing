@@ -3,8 +3,8 @@ const authService = require('../services/authService');
 const signup = async (req, res) => {
   try {
     const { email, password, fname, lname } = req.body;
-    const { userResponse, newUser } = await authService.createUser(email, password, fname, lname);
-    res.status(200).send( {userResponse, newUser });
+    const { newUser } = await authService.createUser(email, password, fname, lname);
+    res.status(200).send( { newUser });
   } catch (error) {
     console.error('Signup error:', error);
     res.status(500).send({ message: 'Error creating user', error: error.message });
@@ -24,6 +24,17 @@ const signin = async (req, res) => {
     }
 }
 
+const googleSignIn = async (req, res) => { 
+  try {
+    const { newUser } = await authService.googleSignIn(req.body);
+    res.status(200).send( { newUser });
+  } catch (error) {
+    console.error('Google Signup error:', error);
+    res.status(500).send({ message: 'Error creating user', error: error.message });
+  }
+
+}
+
 module.exports = {
-  signup, signin
+  signup, signin, googleSignIn
 };
