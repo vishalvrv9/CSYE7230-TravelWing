@@ -3,12 +3,12 @@ const admin = require('firebase-admin');
 const User = require('../models/userModel');
 
 const createUser = async (email, password, fname, lname) => {
-  const userResponse = await admin.auth().createUser({
-    email,
-    password,
-    emailVerified: false,
-    disabled: false,
-  });
+  // const userResponse = await admin.auth().createUser({
+  //   email,
+  //   password,
+  //   emailVerified: false,
+  //   disabled: false,
+  // });
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -20,7 +20,7 @@ const createUser = async (email, password, fname, lname) => {
   });
 
   await newUser.save();
-  return { userResponse, newUser};
+  return { newUser};
 };
 
 const loginUser = async ({ email, password }) => {
@@ -39,6 +39,26 @@ const loginUser = async ({ email, password }) => {
   return user;
 };
 
+const googleSignIn = async (user) => {
+  const newUser = new User({
+    email: user.email,
+    fname: user.displayName,
+  });
+
+  await newUser.save();
+  return { newUser };
+};
+
+const facebookSignIn = async (user) => {
+  const newUser = new User({
+    email: user.email,
+    fname: user.displayName,
+  });
+
+  await newUser.save();
+  return { newUser };
+}
+
 module.exports = {
-  createUser, loginUser,
+  createUser, loginUser, googleSignIn,
 };

@@ -11,6 +11,7 @@ const auth = require('../controllers/auth.controller');
 router.get('/api/health', (req, res) => res.send({ status: 'OK' }));
 router.post('/signup', auth.signup);
 router.post('/login', auth.signin);
+router.post('/google-signup', auth.googleSignIn);
 router.use(routesV1);
 
 
