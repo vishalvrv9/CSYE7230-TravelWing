@@ -43,6 +43,10 @@ const googleSignIn = async (user) => {
   const newUser = new User({
     email: user.email,
     fname: user.displayName,
+    lname: user.displayName,
+    password: 'do not need password in mongoDB for google sign in.',
+    provider: 'google',
+    fireBaseUID: user.uid
   });
 
   await newUser.save();
@@ -53,6 +57,9 @@ const facebookSignIn = async (user) => {
   const newUser = new User({
     email: user.email,
     fname: user.displayName,
+    lname: user.displayName,
+    password: 'do not need password in mongoDB for fb sign in.',
+    provider: 'fb'
   });
 
   await newUser.save();
