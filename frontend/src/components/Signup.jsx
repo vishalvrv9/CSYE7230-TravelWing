@@ -25,7 +25,8 @@ const Signup = () => {
 
   const handleGoogleSignIn = async () => {
     try {
-      await googleSignIn();
+      const googleSignInresponse = await googleSignIn();
+      console.log(googleSignInresponse);
       navigate("/");
     } catch (error) {
       setError(error.message);
@@ -110,7 +111,7 @@ const Signup = () => {
         sx={{ mt: 2, backgroundColor: '#DB4437', '&:hover': { backgroundColor: '#DB4437' } }} // Google color
         onClick={handleGoogleSignIn}
       >
-        Sign in with Google
+        Sign up with Google
       </Button>
 
       <Button
@@ -119,7 +120,7 @@ const Signup = () => {
         sx={{ mt: 2, backgroundColor: '#4267B2', '&:hover': { backgroundColor: '#4267B2' } }} // Facebook color
         onClick={handleGoogleSignIn}
       >
-        Sign in with Facebook
+        Sign up with Facebook
       </Button>
 
       <Box mt={2}>

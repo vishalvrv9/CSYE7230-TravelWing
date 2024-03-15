@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signInWithRedirect } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider,  } from 'firebase/auth';
 
 const UserAuthContext = createContext();
 
@@ -50,50 +50,99 @@ export function UserAuthContextProvider({ children }) {
     return signOut(auth);
   }
   
-  function googleSignIn() {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider)
-      .then(async (result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        // You can handle the user details here
-        console.log(user);
+  // function googleSignIn() {
+  //   const provider = new GoogleAuthProvider();
+  //   return signInWithRedirect(auth, provider)
+  //     .then(async (result) => {
+  //       // This gives you a Google Access Token. You can use it to access the Google API.
+  //       const credential = GoogleAuthProvider.credentialFromResult(result);
+  //       const token = credential.accessToken;
+  //       console.log(`Google Access Token: ${token}`);
+  //       // The signed-in user info.
+  //       const user = result.user;
+  //       // You can handle the user details here
+  //       console.log(user);
 
-        // Prepare user data to be sent to the backend
-        const userData = {
-          uid: user.uid,
-          email: user.email,
-          displayName: user.displayName,
-          // Add other user details you might want to store
-        };
+  //       // Prepare user data to be sent to the backend
+  //       const userData = {
+  //         uid: user.uid,
+  //         email: user.email,
+  //         displayName: user.displayName,
+  //         // Add other user details you might want to store
+  //       };
 
-        // Send the user data to your backend API for MongoDB storage
-        const response = await fetch('http://localhost:8080/google-signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        });
+  //       // Send the user data to your backend API for MongoDB storage
+  //       const response = await fetch('http://localhost:8080/google-signup', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(userData),
+  //       });
 
-        if (!response.ok) {
-          throw new Error('Failed to save user data to MongoDB');
-        }
+  //       if (!response.ok) {
+  //         throw new Error('Failed to save user data to MongoDB');
+  //       }
 
-        // Handle response data if necessary
-        const responseData = await response.json();
-        console.log(responseData);
+  //       // Handle response data if necessary
+  //       const responseData = await response.json();
+  //       console.log(responseData);
 
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error(error);
+  //     }).catch((error) => {
+  //       // Handle Errors here.
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       console.error(error);
+  //     });
+  // }
+
+  async function googleSignIn() {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithRedirect(auth, provider);
+  
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      console.log(`Google Access Token: ${token}`);
+  
+      // The signed-in user info.
+      const user = result.user;
+      // You can handle the user details here
+      console.log(user);
+  
+      // Prepare user data to be sent to the backend
+      const userData = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        // Add other user details you might want to store
+      };
+  
+      // Send the user data to your backend API for MongoDB storage
+      const response = await fetch('http://localhost:8080/google-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
       });
+  
+      if (!response.ok) {
+        throw new Error('Failed to save user data to MongoDB');
+      }
+  
+      // Handle response data if necessary
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(error);
+    }
   }
+  
 
   
 
