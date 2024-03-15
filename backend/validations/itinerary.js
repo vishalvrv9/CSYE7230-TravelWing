@@ -27,7 +27,7 @@ module.exports = {
             travelers: Joi.number().integer().min(1).required(),
             placesToAvoid: Joi.array().optional(),
             flightTimePreference: Joi.string().optional(),            
-            userId: Joi.string(),
+            email: Joi.string(),
             generatediItinerary: Joi.string().required()
           })
     },
