@@ -1,8 +1,9 @@
 // HotelsTab.js
 import React from 'react';
 import { Box, TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import HotelTable from './HotelDetails';
 
-function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setEndDate, travelers, setTravelers }) {
+function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setEndDate, travelers, setTravelers, hotels, setHotelOffers }) {
 
     const handleReset = () => {
         setCountry('');
@@ -26,7 +27,29 @@ function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setE
     const handleTravelersChange = (event) => {
         setTravelers(event.target.value);
     };
+    const handleSearchHotels = async () => {
+      const locationCode = country;
+      try {
+          // Append the query parameters to the URL
+          const url = `http://localhost:8080/api/v1/hotels/search-by-city/${locationCode}`;
 
+          const response = await fetch(url, {
+              method: 'GET', // Specify the method as GET
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+          });
+          console.log(response)
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+          setHotelOffers(data.data); // Assuming you have a state to store the fetched data
+      } catch (error) {
+          console.error('Error fetching flights:', error);
+          // Handle errors, for example, updating the state to display an error message
+      }
+  };
     return (
         <Box
         component="form"
@@ -52,8 +75,8 @@ function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setE
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value="Paris">Paris</MenuItem>
-                <MenuItem value="Newyork">Newyork</MenuItem>
+                <MenuItem value="PAR">Paris</MenuItem>
+                <MenuItem value="JfK">Newyork</MenuItem>
               </Select>
             </FormControl>
             <TextField
@@ -97,9 +120,12 @@ function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setE
             </Button>
             <Button
     variant="contained"
-    sx={{ marginTop: 2 }}
+    sx={{ marginTop: 2 }} onClick = {handleSearchHotels}
   > Fetch Hotels! </Button>
   </Box>
+  {hotels && hotels.length > 0 && (
+                <HotelTable hotels={hotels} />
+            )}
     </Box>
     );
 }
