@@ -1,12 +1,13 @@
 // FlightsTab.js
 import React from 'react';
 import { Box, TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import FlightTable from '../components/FlightsDetails';
 
-
-function FlightsTab({ country, setCountry, startDate, setStartDate, endDate, setEndDate, travelers, setTravelers }) {
+function FlightsTab({ country, setCountry,destCountry, setDestinationCountry, startDate, setStartDate, endDate, setEndDate, travelers, setTravelers, flightOffers, setFlightOffers }) {
 
     const handleReset = () => {
         setCountry('');
+        setDestinationCountry('');
         setStartDate('');
         setEndDate('');
         setTravelers('');
@@ -14,6 +15,10 @@ function FlightsTab({ country, setCountry, startDate, setStartDate, endDate, set
 
     const handleCountryChange = (event) => {
         setCountry(event.target.value);
+    };
+
+    const handleDestinationCountryChange = (event) => {
+      setDestinationCountry(event.target.value);
     };
 
     const handleStartDateChange = (event) => {
@@ -27,7 +32,33 @@ function FlightsTab({ country, setCountry, startDate, setStartDate, endDate, set
     const handleTravelersChange = (event) => {
         setTravelers(event.target.value);
     };
+    const handleSearchFlights = async () => {
+      const originLocationCode = country;
+      const destinationLocationCode = destCountry;
+      const departureDate = startDate;
+      const adults = travelers;
+      try {
+          // Append the query parameters to the URL
+          const url = `http://localhost:8080/api/v1/flights/search-flights?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}`;
 
+          const response = await fetch(url, {
+              method: 'GET', // Specify the method as GET
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+          });
+          console.log(response)
+          if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          const data = await response.json();
+          setFlightOffers(data.data); 
+      } catch (error) {
+          console.error('Error fetching flights:', error);
+         
+      }
+  };
     return (
 
  
@@ -55,10 +86,31 @@ function FlightsTab({ country, setCountry, startDate, setStartDate, endDate, set
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value="Paris">Paris</MenuItem>
-                <MenuItem value="Newyork">Newyork</MenuItem>
+                <MenuItem value="PAR">Paris</MenuItem>
+                <MenuItem value="JFK">New York</MenuItem>
+                <MenuItem value="BKK">Bangkok</MenuItem>
+                <MenuItem value="BLR">Bangalore</MenuItem>
               </Select>
             </FormControl>
+
+            <FormControl fullWidth>
+                <InputLabel id="destination-country-select-label">Select Destination Country</InputLabel>
+                <Select
+                    labelId="destination-country-select-label"
+                    value={destCountry}
+                    label="Select Destination Country"
+                    onChange={handleDestinationCountryChange}
+                >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value="PAR">Paris</MenuItem>
+                    <MenuItem value="JFK">New York</MenuItem>
+                    <MenuItem value="BKK">Bangkok</MenuItem>
+                    <MenuItem value="BLR">Bangalore</MenuItem>
+                </Select>
+            </FormControl>
+
             <TextField
                 label="From"
                 type="date"
@@ -100,9 +152,12 @@ function FlightsTab({ country, setCountry, startDate, setStartDate, endDate, set
             </Button>
             <Button
     variant="contained"
-    sx={{ marginTop: 2 }}
+    sx={{ marginTop: 2 }} onClick = {handleSearchFlights}
   > Fetch Flights! </Button>
     </Box>
+    {flightOffers && flightOffers.length > 0 && (
+                <FlightTable flights={flightOffers} />
+            )}
     </Box>
     );
 }

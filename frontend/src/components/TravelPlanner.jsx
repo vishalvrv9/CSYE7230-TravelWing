@@ -40,12 +40,14 @@ export default function TravelPlanner() {
   const [value, setValue] = useState(0); // Initialize the state to 0 (the first tab)
   const [source, setSource] = useState('');
   const [country, setCountry] = useState('');
+  const [destCountry , setDestinationCountry] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [travelers, setTravelers] = useState('');
   const [itinerary, setItinerary] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [pace, setPace] = useState('');
+  const [flightOffers, setFlightOffers] = useState([]);
   const [hotels, setHotelOffers] = useState('')
   // Function to handle tab change
   const handleChange = (event, newValue) => {
@@ -86,6 +88,8 @@ export default function TravelPlanner() {
         <FlightsTab            
             country={country} 
             setCountry={setCountry} 
+            destCountry = {destCountry}
+            setDestinationCountry = {setDestinationCountry}
             startDate={startDate} 
             setStartDate={setStartDate} 
             endDate={endDate} 
@@ -94,6 +98,8 @@ export default function TravelPlanner() {
             setTravelers={setTravelers}
             source={source}
             setSource={setSource}
+            flightOffers={flightOffers}
+            setFlightOffers={setFlightOffers}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
