@@ -33,7 +33,7 @@ router
   .get(controller.getItineraryByItineraryId);
 
 router
-  .route("/users/:userId/itineraries")
+  .route("/users/:email/itineraries")
   .get(controller.getItinerariesByUserId);
 
 module.exports = router;

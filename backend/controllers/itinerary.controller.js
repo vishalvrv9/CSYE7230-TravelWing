@@ -1,6 +1,7 @@
 const { logger } = require('../config/logger');
 const { ItineraryGenerator, Gpt4Strategy } = require('../utils/modelStrategy');
 const Itinerary = require("../models/itineraryModel");
+const User = require("../models/userModel");
 
 
 // Controller function to handle the request
@@ -27,7 +28,8 @@ exports.fetchItinerary = async (req, res) => {
 
 exports.createItinerary = async (req, res) => {
   try {
-    const itinerary = new Itinerary(req.body);
+    const user = await User.findOne({email : req.body.email});
+    const itinerary = new Itinerary( { ...req.body, userId: user._id });
     await itinerary.save();
     res.status(201).json({ success: true, itinerary });
   } catch (error) {
@@ -68,7 +70,8 @@ exports.getItineraryByItineraryId = async (req, res) => {
 // Get itineraries by user ID
 exports.getItinerariesByUserId = async (req, res) => {
   try {
-    const itineraries = await Itinerary.find({ userId: req.params.userId });
+    const user = await User.findOne({email : req.params.email});
+    const itineraries = await Itinerary.find({ userId: user._id });
 
     res.json({
       success: true,
