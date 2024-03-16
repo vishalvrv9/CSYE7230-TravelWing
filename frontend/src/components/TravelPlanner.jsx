@@ -46,7 +46,7 @@ export default function TravelPlanner() {
   const [itinerary, setItinerary] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [pace, setPace] = useState('');
-
+  const [hotels, setHotelOffers] = useState('')
   // Function to handle tab change
   const handleChange = (event, newValue) => {
     setValue(newValue); // Update the state to the new tab value
@@ -107,6 +107,8 @@ export default function TravelPlanner() {
             setTravelers={setTravelers}
             source={source}
             setSource={setSource}
+            hotels={hotels}
+            setHotelOffers={setHotelOffers}
         />
       </CustomTabPanel>
     </Box>
