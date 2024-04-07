@@ -133,3 +133,5 @@ package-lock.json
 
 # ServiceAccountKey for Firebase
 serviceAccountKey.json
+
+.DS_Store
