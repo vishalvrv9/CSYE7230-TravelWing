@@ -7,13 +7,15 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { logIn, googleSignIn, resetPassword } = useUserAuth(); // Assuming you have a logIn function
+  const { user, logIn, googleSignIn, resetPassword } = useUserAuth(); 
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    console.log("Hello handleSubmit - coming in function handleSubmit");
     e.preventDefault();
     setError("");
     try {
+      console.log("Hello tryblock handleSubmit - coming in function handleSubmit");
       await logIn(email, password);
       navigate("/"); // Navigate to homepage or dashboard upon successful login
     } catch (err) {
