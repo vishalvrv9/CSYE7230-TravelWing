@@ -8,13 +8,18 @@ const userSchema = new mongoose.Schema({
     unique: true,
     index: true
   },
+  // uid: {  // This will store the Firebase UID
+  //   type: String,
+  //   required: true,
+  //   unique: true
+  // },
   fname: {
     type: String,
     required: [true, 'First name is required']
   },
   lname: {
     type: String,
-    required: [true, 'Last name is required']
+    required: false
   },
   email: {
     type: String,
@@ -25,6 +30,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Password is required']
+  },
+  provider: {
+    type: String,
+    required: false
   },
   myItineraries: [{
     type: mongoose.Schema.Types.ObjectId,

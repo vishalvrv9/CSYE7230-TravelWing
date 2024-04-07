@@ -8,6 +8,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [fname, setFname] = useState(""); // State for first name
   const [lname, setLname] = useState(""); // State for last name
+  const [uid, setUid] = useState(""); // State for user id
   const [error, setError] = useState("");
   const { signUp, googleSignIn } = useUserAuth();
   let navigate = useNavigate();
@@ -16,7 +17,7 @@ const Signup = () => {
     e.preventDefault();
     setError("");
     try {
-      await signUp(email, password, fname, lname);
+      const userData = await signUp( email, password, fname, lname);
       navigate("/login");
     } catch (err) {
       setError(err.message);
@@ -33,14 +34,6 @@ const Signup = () => {
     }
   };
 
-//   const handleFacebookSignIn = async () => {
-//     try {
-//       await facebookSignIn();
-//       navigate("/");
-//     } catch (error) {
-//       setError(error.message);
-//     }
-//   };
 
   return (
     <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

@@ -2,10 +2,7 @@ const path = require('path');
 
 const appPackage = require('../package.json');
 
-// require('dotenv-safe').config({
-//   path: path.join(__dirname, '../.env'),
-//   sample: path.join(__dirname, '../.env.example'),
-// });
+require('dotenv').config();
 
 module.exports = {
   appName: appPackage.name,

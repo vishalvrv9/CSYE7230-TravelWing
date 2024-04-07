@@ -2,9 +2,9 @@ const { OpenAI } = require('openai');
 const { chatgptKey } = require('../config/vars');
 
 
-// const openAi = new OpenAI({
-//   apiKey: process.env.CHATGPT_KEY,
-// });
+const openAi = new OpenAI({
+  apiKey: process.env.CHATGPT_KEY,
+});
 
 exports.chatGPTResponse = async (prompt, openaiConfig) => {
   try {
