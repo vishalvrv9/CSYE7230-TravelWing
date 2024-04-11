@@ -27,7 +27,6 @@ jobs:
         cd backend/tests && ls && touch env.js
         ls -al
         echo "PORT=${{ secrets.PORT }}" >> env.js
-        echo "CHATGPT_KEY=${{ secrets.CHATGPT_KEY }}" >> env.js
         echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> env.js
         echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> env.js
         echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> env.js
