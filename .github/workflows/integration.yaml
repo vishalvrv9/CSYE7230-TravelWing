@@ -25,3 +25,7 @@ jobs:
     - name: Run Tests
       if: ${{ failure() == false }}
       run: npm test --prefix ./backend/
+
+    - name: Confirm tests success
+      if: ${{ success() }}
+      run: echo "All tests passed successfully!"

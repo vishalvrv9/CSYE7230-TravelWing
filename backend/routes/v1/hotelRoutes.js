@@ -6,7 +6,7 @@ router.get('/search-by-city/:cityCode', async (req, res) => {
   try {
     const cityCode = req.params.cityCode;
     const data = await searchHotelsByCity(cityCode);
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: error.toString() });
   }

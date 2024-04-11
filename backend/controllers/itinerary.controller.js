@@ -9,6 +9,7 @@ exports.fetchItinerary = async (req, res) => {
   try {
     const itinerary = new ItineraryGenerator(new Gpt4Strategy(req));
     const response = await itinerary.generate();
+    console.log(response)
     if (response) {
       logger.info('Fetched the info successfully', response);
       res.json({ success: true, itinerary: response });
@@ -18,8 +19,7 @@ exports.fetchItinerary = async (req, res) => {
         .json({ success: false, message: "Itinerary could not be generated." });
     }
   } catch (error) {
-    console.error("Error fetching itinerary: ", error);
-    res.status(500).json({
+    res.status(400).json({
       success: false,
       message: "An error occurred while processing your request.",
     });
