@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const request = require("supertest");
 const app = require("../config/express");
-const Itinerary = require('../models/itineraryModel');
-const User = require('../models/userModel');
 const { uri } = require('../config/vars');
 jest.mock('../config/mongoose', () => {
     const connect = jest.fn();
