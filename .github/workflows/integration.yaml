@@ -25,6 +25,8 @@ jobs:
     - name: create .env file in the backend
       run: |
         pwd
+        ls -al
+        cd cd backend && ls -la
         touch .env.js
         echo "PORT=${{ secrets.PORT }}" >> .env.js
         echo "CHATGPT_KEY=${{ secrets.CHATGPT_KEY }}" >> .env.js
