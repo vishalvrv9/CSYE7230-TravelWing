@@ -4,10 +4,6 @@ const app = require("../config/express");
 const Itinerary = require('../models/itineraryModel');
 const User = require('../models/userModel');
 const { uri } = require('../config/vars');
-const { ItineraryGenerator, Gpt4Strategy } = require('../utils/modelStrategy');
-const itineraryController = require('../controllers/itinerary.controller');
-const nock = require('nock');
-
 jest.mock('../config/mongoose', () => {
     const connect = jest.fn();
     return { connect };
