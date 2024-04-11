@@ -24,15 +24,14 @@ jobs:
 
     - name: create .env file in the backend
       run: |
-        pwd
-        cd backend/tests && ls 
-        touch backend/tests/env.js
+        cd backend/tests && ls && touch env.js
+        ls -al
         echo "PORT=${{ secrets.PORT }}" >> env.js
         echo "CHATGPT_KEY=${{ secrets.CHATGPT_KEY }}" >> env.js
         echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> env.js
         echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> env.js
         echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> env.js
-        cat backend/tests/env.js
+        cat env.js
 
     - name: Run Tests
       if: ${{ failure() == false }}
