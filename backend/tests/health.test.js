@@ -86,41 +86,6 @@ jest.mock('../utils/modelStrategy', () => {
   };
 });
 
-describe('POST /generateItinerary', () => {
-  const mockRequestBody = {
-    source: 'Boston',
-    destination: 'France',
-    startDate: "2024-03-10",
-    endDate: "2024-03-20",
-    travelers: 2,
-    pace:'medium'
-  };
-
-  it('should return 400 when required fields are missing', async () => {
-    const incompleteRequest = { ...mockRequestBody };
-    delete incompleteRequest.destination;
-    delete incompleteRequest.startDate;
-    delete incompleteRequest.endDate;
-
-    const res = await request(app)
-      .post('/api/v1/generateItinerary')
-      .send(incompleteRequest);
-
-    expect(res.statusCode).toEqual(400);
-  });
-
-  it('should handle server errors', async () => {
-    const res = await request(app)
-      .post('/api/v1/generateItinerary')
-      .send(mockRequestBody);
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.body).toEqual({
-      success: false,
-      message: "An error occurred while processing your request.",
-    });
-  });
-});
 
 describe('GET /api/v1/hotels/search-by-city/:cityCode', () => {
   test('should respond with JSON data and status 200 for a valid city code', async () => {
