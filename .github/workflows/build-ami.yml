@@ -61,17 +61,7 @@ jobs:
         echo `pwd`
         packer build ami.us-east-1.pkr.hcl
 
-        
-    - name: Retrieve Latest AMI ID
+    - name: Application Deployment Successfull
       run: |
-        latest_ami=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2)
-        echo "latest ami is $latest_ami"
+        echo "Amazon Machine Image is built"
 
-    - name: Create new Launch Template version
-      run: |
-        latest_ami=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2)
-        aws ec2 create-launch-template-version \
-          --launch-template-name ${{ secrets.TEMPLATE_NAME }} \
-          --region ${{ secrets.AWS_REGION }} \
-          --source-version 1 \
-          --launch-template-data "{\"ImageId\": \"$latest_ami\"}"
