@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build AMI and Deploy Travel Wing
+    name: Application Deployment
     runs-on: ubuntu-latest
 
     steps:
@@ -37,18 +37,29 @@ jobs:
         sudo mv packer /usr/local/bin/
       shell: bash
 
-    - name: Navigate to the backend
-      run: cd backend
 
-    - name: Initialize Packer
-      run: packer init .
+    - name: Navigate to the backend and Check if Packer file exists
+      run: |
+        cd backend
+        packer init .
+
+    - name: Packer Validation
+      run: |
+        echo `pwd`
+        cd backend
+        echo `pwd`
+        packer validate ami.us-east-1.pkr.hcl 
 
     - name: Build AMI
       env:
         AWS_REGION : ${{ secrets.AWS_REGION }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
-      run: packer build ami.us-east-1.pkr.hcl
+      run: |
+        echo `pwd`
+        cd backend
+        echo `pwd`
+        packer build ami.us-east-1.pkr.hcl
 
         
     - name: Retrieve Latest AMI ID

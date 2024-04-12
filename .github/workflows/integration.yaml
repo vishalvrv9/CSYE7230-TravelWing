@@ -1,4 +1,4 @@
-name: Integration CI
+name: Continuos Integration
 #workflow
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Integration Works
+    name: Perform Integration Tests
     runs-on: ubuntu-latest
 
     steps:
