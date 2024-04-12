@@ -145,7 +145,7 @@ const loadingMessages = [
           endDate: endDate,
           pace: pace,
           travelers: travelers,
-          email: user.email, // Use the user's email from context
+          email: user.user.email, // Use the user's email from context
           generatediItinerary: itinerary, // Assuming this is the correct field name
         };
   

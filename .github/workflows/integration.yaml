@@ -21,14 +21,20 @@ jobs:
 
     - name: Install dependencies
       run: npm install --prefix ./backend/
+    
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.10.0
+      with:
+        mongodb-version: '4.2'
 
     - name: create .env file 
       run: |
         cd backend && ls && touch .env
         echo "PORT=${{ secrets.PORT }}" >> .env
-        echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
+        echo "mongodb://localhost:27017/test" >> .env
         echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> .env
         echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> .env
+        echo  "CHATGPT_KEY=TEST" >> .env
         echo "env file created"
         cat .env
 
