@@ -22,6 +22,20 @@ jobs:
     - name: Install dependencies
       run: npm install --prefix ./backend/
 
+    - name: create .env file 
+      run: |
+        cd backend && ls && touch .env
+        echo "PORT=${{ secrets.PORT }}" >> .env
+        echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
+        echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> .env
+        echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> .env
+        echo "env file created"
+        cat .env
+
     - name: Run Tests
       if: ${{ failure() == false }}
       run: npm test --prefix ./backend/
+
+    - name: Confirm tests success
+      if: ${{ success() }}
+      run: echo "All tests passed successfully!"

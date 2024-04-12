@@ -1,50 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AppBar, Toolbar, Typography, Button, IconButton, useTheme, ThemeProvider, createTheme, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
-import { useUserAuth } from '../context/UserAuthContext'; // Adjust the path as necessary
+import { useUserAuth } from '../context/UserAuthContext'; 
+import '../css/Navbar.css';
 
-const Navbar = () => {
-  const { user, logOut } = useUserAuth();
+const Navbar = () => { 
 
-  const [darkMode, setDarkMode] = useState(false);
-  const staticLinks = [
-    { path: "/", name: "TravelWing" },
-    { path: "/about", name: "About" },
-    { path: "/itinerary", name: "Itinerary" },
-    { path: "/login", name: "Login" },
-    { path: "/signup", name: "Signup" },
-    // { path: "/saved", name: "Saved" }
-
-  ];
-
-  const dynamlcLinks = [
-    { path: "/", name: "TravelWing" },
-    { path: "/about", name: "About" },
-    { path: "/itinerary", name: "Itinerary" },
-    // { path: "/login", name: "Login" },
-    // { path: "/signup", name: "Signup" },
-    { path: "/saved", name: "Saved" }
-
-  ];
-
-  const location = useLocation();
+  const { user, setUser, logOut } = useUserAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const theme = useTheme();
 
-  const theme = createTheme({
-    palette: {
-      mode: darkMode ? 'dark' : 'light',
-    },
-  });
+  const [click, setClick] = useState(false);
+  const [button, SetButton] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 960);
 
-  const toggleDarkMode = () => setDarkMode(!darkMode);
+  const handleResize = () => {
+    setIsMobileView(window.innerWidth <= 960);
+  };
+  
 
-  const handleLogout = async () => {
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
+    const handleLogout = async () => {
     try {
       await logOut();
       console.log("Logged out successfully");
+      setUser(null);
       // redirect to the home page
       navigate("/about");
     } catch (error) {
@@ -52,48 +48,111 @@ const Navbar = () => {
     }
   };
 
+  const staticLinks = [
+    { path: "/", name: "TravelWing" },
+    { path: "/about", name: "About" },
+    { path: "/itinerary", name: "Itinerary" },
+    { path: "/login", name: "Login" },
+    { path: "/signup", name: "Signup" },
+  ];
+
+  const dynamicLinks = [
+    { path: "/", name: "TravelWing" },
+    { path: "/about", name: "About" },
+    { path: "/itinerary", name: "Itinerary" },
+    { path: "/saved", name: "Saved" }
+
+  ];
+
+
+  const showButton = () => {
+    if(window.innerWidth <= 960) {
+      SetButton(false);
+    } else {
+      SetButton(true);
+    }
+  };
+
+  useEffect(() => {
+    showButton();
+  }, []);
+
+  window.addEventListener('resize', showButton);
+
+  const changeBackground = () => {
+    console.log (window.scrollY);
+  }
+
+  const textColor = isScrolled ? 'white' : 'black';
+
+  
+
   return (
-    <ThemeProvider theme={theme}>
-      <AppBar position="static">
-        <Toolbar>
+    <AppBar position="fixed" className='navbar-main'>
+      <Toolbar className="toolbar-centered">
+        {!isMobileView && (
+          <Box flexGrow={1} display="flex" justifyContent="center">
+            {(user ? dynamicLinks : staticLinks).map((link) => (
+              <Button key={link.name} component={Link} to={link.path} className="navbar-button" onClick={link.action}>
+                <Typography variant="button">{link.name}</Typography>
+              </Button>))}
+          {user && (
+            <Button onClick={handleLogout} style={{color: "white"}}>Logout</Button>
+          )}
+        </Box>
+        )}
+
+        {/* {isMobileView && (
           <IconButton
             size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
-          >
+
             <MenuIcon />
           </IconButton>
-          {!user && staticLinks.map((link) => (
-            <Button key={link.path} color="inherit" component={Link} to={link.path} sx={{ margin: '0 10px' }}>
-              <Typography variant="button" style={{ color: location.pathname === link.path ? theme.palette.secondary.main : 'inherit' }}>
-                {link.name}
-              </Typography>
-            </Button>
-          ))}
+        )} */}
+      </Toolbar>
+    </AppBar>
+  //   <AppBar position="fixed" className='navbar-main' sx={{ alignItems: 'center' }}>
+  //     <Toolbar className="toolbar-centered">
+  //       <Box className="desktop-menu" flexGrow={1}>
+  //         {(user ? dynamicLinks : staticLinks).map((link) => (
+  //           <Button key={link.path} component={Link} to={link.path} className="navbar-button">
+  //             <Typography variant="button">{link.name}</Typography>
+  //           </Button>
+  //         ))}
+  //       </Box>
 
-        {user && dynamlcLinks.map((link) => (
-            <Button key={link.path} color="inherit" component={Link} to={link.path} sx={{ margin: '0 10px' }}>
-              <Typography variant="button" style={{ color: location.pathname === link.path ? theme.palette.secondary.main : 'inherit' }}>
-                {link.name}
-              </Typography>
-            </Button>
-          ))}
+  //       {/* <IconButton
+  //         size="large"
+  //         edge="start"
+  //         color="inherit"
+  //         aria-label="menu"
+  //         sx={{ display: { xs: 'block', md: 'none' } }} // Only show on small screens
+  //       >
+  //         <MenuIcon />
+  //       </IconButton> */}
 
-{user && (
-                <Button color="inherit" onClick={handleLogout}>
-                  Logout
-                </Button>
-              )}
-          <Box flexGrow={1} />
-          <IconButton onClick={toggleDarkMode} color="inherit">
-            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    </ThemeProvider>
-  );
-};
+      
+  //  {(user ? dynamicLinks : staticLinks).map((link) => (
+  //         <Button key={link.path} component={Link} to={link.path} sx={{ margin: '0 10px' }} style={{ color: textColor }}>
+  //           <Typography variant="button" style={{ color: textColor }}>{link.name}</Typography>
+  //         </Button>
+  //       ))}
+  //       {user && (
+  //         <Button onClick={handleLogout} style={{ color: textColor }}>Logout</Button>
+  //       )}
+
+        
+  //       <Box flexGrow={1} />
+
+  //   </Toolbar>
+  // </AppBar>
+// </div>
+
+);
+
+}
 
 export default Navbar;

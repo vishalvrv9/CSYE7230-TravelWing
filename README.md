@@ -1,3 +1,3 @@
 # CSYE7230-TravelWing
 
-todo
+Hi, we are team Travel Wing!

@@ -12,7 +12,7 @@ router.get('/search-flights/', async (req, res) => {
       departureDate,
       adults
     );
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: error.toString() });
   }

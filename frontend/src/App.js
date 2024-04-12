@@ -2,6 +2,7 @@ import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 // import components
+// import GlobeDemo from './components/GlobeDemo.tsx';
 import Navbar from './components/Navbar';
 import About from './components/About';
 import Login from './components/Login';
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           {/* <Route path="/home" element={<Home />} /> */}
+          {/* <Route path="/" element={<GlobeDemo />} /> */}
           <Route path="/about" element={<About />} />
           <Route path="/itinerary" element={<Itinerary />} />
           <Route path="/login" element={<Login />} />
