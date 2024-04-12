@@ -21,14 +21,15 @@ jobs:
       - name: Install Packer
         uses: hashicorp/setup-packer@main
         
-      - name: Navigate to the backend
-        run: cd backend
-
       - name: list files
         run: |
           ls -a
           current_directory=$(pwd)      
           echo `pwd`
+
+      - name: Navigate to the backend
+        run: cd backend
+            echo `pwd`
 
       - name: Initialize Packer
         run: packer init .
