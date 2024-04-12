@@ -25,13 +25,12 @@ jobs:
     - name: create .env file 
       run: |
         cd backend && ls && touch .env
-        ls -al
-        echo "env file created"
         echo "PORT=${{ secrets.PORT }}" >> .env
         echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
         echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> .env
         echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> .env
-        cat env.js
+        echo "env file created"
+        cat .env
 
     - name: Run Tests
       if: ${{ failure() == false }}
