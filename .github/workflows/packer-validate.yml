@@ -39,9 +39,5 @@ jobs:
                exit 1
            fi
            packer init .
-       
-      - name: Packer fmt
-        run: packer fmt -check ami.us-east-1.pkr.hcl
-
-      - name: Packer validate
-        run: packer validate ami.us-east-1.pkr.hcl
+           packer fmt -check ami.us-east-1.pkr.hcl
+           packer validate ami.us-east-1.pkr.hcl
