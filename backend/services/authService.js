@@ -3,33 +3,24 @@ const admin = require('firebase-admin');
 const User = require('../models/userModel');
 
 const createUser = async ( email, password, fname, lname) => {
-  // const userResponse = await admin.auth().createUser({
-  //   email,
-  //   password,
-  //   emailVerified: false,
-  //   disabled: false,
-  // });
+
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = new User({
-    // uid: userResponse.uid,
+
     email,
     password: hashedPassword,
     fname,
     lname,
   });
-
-  console.log("Hello fresh newUser ", newUser);
-
-  await newUser.save();
-  return { newUser};
+  
+    await newUser.save();
+    return {newUser};
 };
 
 const loginUser = async ({ email, password }) => {
-  console.log("Hello loginUser - before finding email in service ", email, password);
   const user = await User.findOne({ email });
-  console.log("Hello loginUser - after finding email in service ", user);
   if (!user) {
     throw new Error('User not found');
   }
@@ -40,13 +31,7 @@ const loginUser = async ({ email, password }) => {
     throw new Error('Invalid password');
   }
 
-  console.log("Hello loginUser - after validating both email and password in service ", user.email, user.password);
-  // const userResponse = {
-  //   fname: user.fname,
-  //   lname: user.lname,
-  //   email: user.email,
-  //   // Include other fields you want to return
-  // };
+  
   return {user};
 };
 
@@ -64,7 +49,6 @@ const googleSignIn = async (user) => {
   });
   const newUserString = JSON.stringify(newUser);
 
-  console.log("hello google user ", newUserString);
 
   await newUser.save();
   return { newUser };
