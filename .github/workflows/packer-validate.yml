@@ -1,0 +1,40 @@
+name: Packer Validation
+#workflow
+on:
+  pull_request:
+    branches:
+     - main
+
+jobs:
+  validate:
+    name: Validate Packer Template
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: test
+        run: ls
+
+      - name: Install Packer
+        uses: hashicorp/setup-packer@main
+        
+      - name: list files
+        run: |
+          ls -a
+          current_directory=$(pwd)      
+          echo `pwd`
+
+      - name: Navigate to the backend and Check if Packer file exists
+        run: |
+           cd backend
+           packer init .
+    
+      - name: Packer fmt
+        run: |
+           echo `pwd`
+           cd backend
+           echo `pwd`
+           packer validate ami.us-east-1.pkr.hcl           

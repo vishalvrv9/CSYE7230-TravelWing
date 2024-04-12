@@ -1,0 +1,66 @@
+name: Build AMI and Deploy Travel Wing
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build AMI and Deploy Travel Wing
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18
+
+    - name: list files
+      run: |
+        ls -a
+        current_directory=$(pwd)
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: v18.17.1
+
+    - name: Set up Packer
+      run: |
+        wget https://releases.hashicorp.com/packer/1.7.3/packer_1.7.3_linux_amd64.zip
+        unzip packer_1.7.3_linux_amd64.zip
+        chmod +x packer
+        sudo mv packer /usr/local/bin/
+      shell: bash
+
+    - name: Navigate to the backend
+      run: cd backend
+
+    - name: Initialize Packer
+      run: packer init .
+
+    - name: Build AMI
+      env:
+        AWS_REGION : ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+      run: packer build ami.us-east-1.pkr.hcl
+
+        
+    - name: Retrieve Latest AMI ID
+      run: |
+        latest_ami=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2)
+        echo "latest ami is $latest_ami"
+
+    - name: Create new Launch Template version
+      run: |
+        latest_ami=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2)
+        aws ec2 create-launch-template-version \
+          --launch-template-name ${{ secrets.TEMPLATE_NAME }} \
+          --region ${{ secrets.AWS_REGION }} \
+          --source-version 1 \
+          --launch-template-data "{\"ImageId\": \"$latest_ami\"}"
