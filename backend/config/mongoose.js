@@ -8,3 +8,8 @@ module.exports.connect = (uri) => {
 
   return mongoose.connection;
 };
+
+module.exports.disconnect = async () => {
+  mongoose.disconnect()
+    .catch((err) => console.error('MongoDB disconnection error:', err));
+};

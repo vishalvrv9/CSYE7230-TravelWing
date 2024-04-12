@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Box,Typography,  TextField, Grid, Button, Select, MenuItem, InputLabel, FormControl, CircularProgress } from '@mui/material';
+import { Box,Typography,  TextField, Grid, Button, Select, MenuItem, InputLabel, FormControl, CircularProgress, Modal } from '@mui/material';
 import { useUserAuth } from '../context/UserAuthContext'; // Adjust the path as necessary
+
 
 
 
@@ -10,6 +11,17 @@ function ItineraryTab({ country, setCountry, startDate, setStartDate, endDate, s
 
   const [save, setSave] = useState(false);
   const [error, setError] = useState("");
+  const [loadingMessage, setLoadingMessage] = useState('');
+
+
+  // Define your loading messages outside the component
+const loadingMessages = [
+  "Crafting your perfect itinerary...",
+  "Gathering the best spots for you...",
+  "Tailoring your travel plans...",
+  "Fetching the most exciting experiences...",
+  "Preparing your adventure details...",
+];
 
 
   const { user } = useUserAuth(); // Assuming `user` object includes `email` field
@@ -112,7 +124,7 @@ function ItineraryTab({ country, setCountry, startDate, setStartDate, endDate, s
     const handleSave = async () => {
       setError(""); 
       // Check if user is logged in and has an email
-      if (!user || !user.email) {
+      if (!user) {
         navigate('/login'); // Redirect to login if no user or user email is found
         return;
       }
@@ -133,7 +145,7 @@ function ItineraryTab({ country, setCountry, startDate, setStartDate, endDate, s
           endDate: endDate,
           pace: pace,
           travelers: travelers,
-          email: user.email, // Use the user's email from context
+          email: user.user.email, // Use the user's email from context
           generatediItinerary: itinerary, // Assuming this is the correct field name
         };
   
@@ -164,6 +176,26 @@ function ItineraryTab({ country, setCountry, startDate, setStartDate, endDate, s
         setSave(false); // Reset loading state
       }
     };
+
+    useEffect(() => {
+      let intervalId;
+  
+      if (isGenerating) {
+        // Function to update message
+        const updateMessage = () => {
+          const randomMessage = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
+          setLoadingMessage(randomMessage);
+        };
+  
+        // Immediately update the message and set an interval to update it periodically
+        updateMessage();
+        intervalId = setInterval(updateMessage, 2000); // Change every 2 seconds, adjust as needed
+      }
+  
+      // Cleanup interval on component unmount or when loading stops
+      return () => clearInterval(intervalId);
+    }, [isGenerating]); // Effect depends on isGenerating state
+  
   
     return (
 <Grid container spacing={2}>
@@ -273,16 +305,18 @@ function ItineraryTab({ country, setCountry, startDate, setStartDate, endDate, s
       width: '30%', 
       m: 2, 
     }}}>
-            <Button variant="outlined" onClick={handleReset}>
-              Reset
-            </Button>
-            <Button
-    variant="contained"
-    onClick={handleGenerate}
-    disabled={isGenerating}
-  >
-    {isGenerating ? <CircularProgress size={24} /> : "Generate"}
-  </Button>
+     <Button variant="outlined"   sx={{ m:2}} onClick={handleReset}>
+  Reset
+</Button>{" "} {/* Space added here */}
+<Button
+sx={{ m:2}} 
+  variant="contained"
+  onClick={handleGenerate}
+  disabled={isGenerating}
+>
+{isGenerating ? <img src="../../../public/loading.gif" alt="Loading" style={{width: 24, height: 24}} /> : "Generate"}
+</Button>
+
             </Box>
     </Box>
     </Grid>
@@ -320,7 +354,43 @@ function ItineraryTab({ country, setCountry, startDate, setStartDate, endDate, s
 
     
   </Grid>
+
+  <Modal
+  open={isGenerating}
+  onClose={() => {}}
+  aria-labelledby="loading-modal-title"
+  aria-describedby="loading-modal-description"
+  sx={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}
+>
+<Box sx={{
+    position: 'absolute',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}>
+    <Typography id="loading-modal-title" variant="h6" component="h2">
+      {loadingMessage}
+    </Typography>
+    <Box sx={{ mt: 2 }}>
+      <img src="/loading.gif" alt="Loading" style={{width: 80, height: 80}} />
+    </Box>
+  </Box>
+
+</Modal>
+
 </Grid>
+
+
+
 
     );
 }

@@ -6,6 +6,8 @@ const signup = async (req, res) => {
     const { newUser } = await authService.createUser( email, password, fname, lname);
     res.status(200).send( {newUser} );
   } catch (error) {
+    console.log(error);
+
     console.error('Signup error:', error);
     res.status(500).send({ message: 'Error creating user', error: error.message });
   }
@@ -16,6 +18,7 @@ const signin = async (req, res) => {
         const user = await authService.loginUser(req.body);
         res.status(200).send({ message: 'Login Successful', user: user });
     } catch (error) {
+      console.log(error);
         if (error.message === 'Invalid password') {
             return res.status(401).send({ message: 'Invalid email or password' });
         }

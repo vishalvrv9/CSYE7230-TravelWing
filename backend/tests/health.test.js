@@ -1,22 +1,14 @@
-const mongoose = require('mongoose');
 const request = require("supertest");
 const app = require("../config/express");
+const mongoose = require('../config/mongoose');
 
-jest.mock('../config/mongoose', () => {
-    const connect = jest.fn();
-    return { connect };
-  });
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }).then(() => console.log('Testing DB setup successful'))
-    .catch((err) => console.error('Testing DB error:', err));;
-   
+    await mongoose.connect(process.env.MONGODB_URI);
+    
   });
   
   afterAll(async () => {
-    await mongoose.connection.close();
+    await mongoose.disconnect();
   });
   
   describe("GET /api/health", () => {
@@ -53,7 +45,15 @@ describe("POST /signup", () => {
 
 describe("POST /login", () => {
   it("should return 200 and a token for successful login", async () => {
-    // Assuming you have already created a user for testing
+
+    const newUser = {
+      email: `tests6@gmail.com`,
+      password: "123",
+      fname: "it2",
+      lname:"p",
+    };
+    await request(app).post("/signup").send(newUser);
+    
     const loginUser = {
       email: "tests6@gmail.com",
       password: "123"

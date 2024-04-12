@@ -115,12 +115,12 @@ function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setE
       width: '30%', 
       m: 2, 
     }}}>
-            <Button variant="outlined" onClick={handleReset} sx={{ marginTop: 2 }}>
+            <Button variant="outlined" onClick={handleReset} sx={{ m: 2 }}>
               Reset
             </Button>
             <Button
     variant="contained"
-    sx={{ marginTop: 2 }} onClick = {handleSearchHotels}
+    sx={{ m: 2 }} onClick = {handleSearchHotels}
   > Fetch Hotels! </Button>
   </Box>
   {hotels && hotels.length > 0 && (
