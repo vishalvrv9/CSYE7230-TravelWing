@@ -31,7 +31,13 @@ jobs:
         run: |
            cd backend
            packer init .
+    
+      - name: Packer fmt
+        run: |
+           cd backend
            packer fmt -check ami.us-east-1.pkr.hcl
 
       - name: Packer validate
-        run: packer validate ami.us-east-1.pkr.hcl
+        run: |
+           cd backend
+           packer validate ami.us-east-1.pkr.hcl
