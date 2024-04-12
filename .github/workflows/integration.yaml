@@ -31,7 +31,7 @@ jobs:
       run: |
         cd backend && ls && touch .env
         echo "PORT=${{ secrets.PORT }}" >> .env
-        echo "MONGODB_URI=mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb" >> .env
+        echo "MONGODB_URI=mongodb://127.0.0.1:27017/test" >> .env
         echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> .env
         echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> .env
         echo  "CHATGPT_KEY=TEST" >> .env
