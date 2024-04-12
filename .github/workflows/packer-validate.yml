@@ -28,8 +28,9 @@ jobs:
           echo `pwd`
 
       - name: Navigate to the backend
-        run: cd backend
-            echo `pwd`
+        run: |
+           cd backend
+           echo `pwd`   
 
       - name: Initialize Packer
         run: packer init .
