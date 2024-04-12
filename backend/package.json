@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "node ./index.js",
     "start": "nodemon ./index.js",
-    "test": "jest"
+    "test": "jest",
+    "swagger": "node ./swagger.js"
+
   },
   "author": "",
   "license": "ISC",
@@ -34,6 +36,7 @@
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "nock": "^13.5.4"
+    "nock": "^13.5.4",
+    "swagger-autogen": "^2.23.7"
   }
 }
