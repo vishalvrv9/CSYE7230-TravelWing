@@ -34,7 +34,7 @@ jobs:
     
       - name: Packer fmt
         run: |
-           cd backend
+           echo `pwd`
            packer fmt -check ami.us-east-1.pkr.hcl
 
       - name: Packer validate
