@@ -24,6 +24,12 @@ jobs:
       - name: Navigate to the backend
         run: cd backend
 
+      - name: list files
+        run: |
+          ls -a
+          current_directory=$(pwd)      
+          echo `pwd`
+
       - name: Initialize Packer
         run: packer init .
        
