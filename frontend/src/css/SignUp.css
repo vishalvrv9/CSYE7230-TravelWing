@@ -1,0 +1,234 @@
+.signup-form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .input-motion-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #ffffff; 
+    background: #333; 
+    border: 1px solid #555;
+  }
+
+  .welcome-modal .form-input {
+    color: #ffffff;
+    background: #333;
+    border: 1px solid #555;
+  }
+
+  .form-input::placeholder {
+    color: #bbb;
+  }
+  
+  .submit-btn {
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .submit-btn:hover {
+    background-color: darkblue;
+  }
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0a3d62;
+    overflow: hidden; 
+  }
+
+
+  .welcome-modal {
+    background: #121212;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+
+  }
+  
+  .welcome-modal h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  
+  .welcome-modal p {
+    margin-bottom: 20px;
+    color: #aaaaaa;
+  }
+
+  .name-fields {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .name-input {
+    flex: 1;
+  }
+  
+  .divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+  }
+  
+  .divider:before,
+  .divider:after {
+    content: '';
+    background: #888;
+    height: 1px;
+    width: 40%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .divider:before {
+    left: 0;
+  }
+  
+  .divider:after {
+    right: 0;
+  }
+  
+  .social-signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .social-signup.google-signup {
+    background-color: #DB4437;
+  }
+  
+  .social-signup.facebook-signup {
+    background-color: #4267B2;
+  }
+  
+  .social-signup .react-icons {
+    margin-right: 10px;
+  }
+  
+  /* @keyframes flyDiagonalDown {
+    0% { transform: translate(0, 0); opacity: 1; }
+    50% { opacity: 0.2; }
+    100% { transform: translate(100vw, 100vh); opacity: 1; }
+  } */
+  
+  @keyframes flyDiagonalDown {
+    0% { 
+      transform: translate(-100%, 0); /* Starts off-screen to the left */
+      opacity: 0;
+    }
+    50% { 
+      transform: translate(50vw, 50vh); /* Adjust mid-point for desired effect */
+      opacity: 0.5;
+    }
+    100% { 
+      transform: translate(100vw, 100vh); /* Ends at the bottom-right corner */
+      opacity: 1;
+    }
+  }
+  
+  
+  @keyframes flyDiagonalUp {
+    0% { transform: translate(-100%, 100vh); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translate(100vw, -100vh); opacity: 0; }
+  }
+
+  @keyframes flyDiagonalDownReversed {
+    0% { transform: translate(100vw, 100vh); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translate(-100%, -50%); opacity: 0; }
+  }
+
+  @keyframes flyDiagonalUpReversed {
+    0% { transform: translate(100vw, -100vh); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translate(-100%, 100vh); opacity: 0; }
+  }
+  
+  .slide-in-left {
+    animation: slideInFromLeft 0.5s ease-out forwards;
+  }
+  
+  
+  .flying-flight {
+    position: fixed;
+    width: 150px;
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    opacity: 0; 
+  }
+  
+  
+.flight1 {
+  animation-name: flyDiagonalDown;
+  animation-duration: 15s; 
+}
+
+.flight2 {
+  animation-name: flyDiagonalUp;
+  animation-duration: 20s;
+  animation-delay: 5s; 
+}
+
+.flight3 {
+  animation-name: flyDiagonalDownReversed;
+  animation-duration: 25s;
+  animation-delay: 10s; 
+}
+
+.flight4 {
+  animation-name: flyDiagonalUpReversed;
+  animation-duration: 30s;
+  animation-delay: 15s;
+}

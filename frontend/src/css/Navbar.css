@@ -1,0 +1,21 @@
+  /* .toolbar-centered {
+    justify-content: center !important; 
+    width: 100%;
+  }  */
+
+  .navbar-main {
+    background-color: rgba(0, 0, 0, 0.8) !important; /* Dark background with reduced opacity */
+    width: 100%; /* Full width */
+  }
+  
+  .navbar-button {
+    color: white !important;
+    font-weight: bold !important;
+    margin: 0 10px; /* Spacing between buttons */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover and click */
+  }
+  
+  .navbar-button:hover {
+    background-color: rgba(83, 115, 130, 0.2); /* Hover effect */
+    transform: scale(1.05); /* Slight increase in size */
+  }  
