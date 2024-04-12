@@ -27,23 +27,18 @@ jobs:
           current_directory=$(pwd)      
           echo `pwd`
 
-      - name: Navigate to the backend
+      - name: Navigate to the backend and Check if Packer file exists
         run: |
            cd backend
            echo `pwd`   
            echo `ls`
-           
-      - name: Check if Packer file exists
-        run: |
-             if [ -f "ami.us-east-1.pkr.hcl" ]; then
+           if [ -f "ami.us-east-1.pkr.hcl" ]; then
                echo "Packer file found."
              else
                echo "Packer file not found. Check the file location."
                exit 1
-             fi
-
-      - name: Initialize Packer
-        run: packer init .
+           fi
+           packer init .
        
       - name: Packer fmt
         run: packer fmt -check ami.us-east-1.pkr.hcl
