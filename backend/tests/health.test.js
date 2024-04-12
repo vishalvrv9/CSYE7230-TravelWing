@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const request = require("supertest");
 const app = require("../config/express");
-const { uri } = require('../config/vars');
+
 jest.mock('../config/mongoose', () => {
     const connect = jest.fn();
     return { connect };
   });
   beforeAll(async () => {
-    await mongoose.connect(uri, {
+    await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     }).then(() => console.log('Testing DB setup successful'))

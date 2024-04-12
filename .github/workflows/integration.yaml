@@ -22,15 +22,15 @@ jobs:
     - name: Install dependencies
       run: npm install --prefix ./backend/
 
-    - name: create .env file in the backend
+    - name: create .env file 
       run: |
-        cd backend/tests && ls && touch env.js
+        cd backend && ls && touch .env
         ls -al
         echo "env file created"
-        echo "PORT=${{ secrets.PORT }}" >> env.js
-        echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> env.js
-        echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> env.js
-        echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> env.js
+        echo "PORT=${{ secrets.PORT }}" >> .env
+        echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
+        echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> .env
+        echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> .env
         cat env.js
 
     - name: Run Tests
