@@ -13,6 +13,7 @@ router.post('/signup', auth.signup);
 router.post('/login', auth.signin);
 router.post('/google-signup', auth.googleSignIn);
 router.get('/getUserDetails/:email', auth.getUserDetailsById);
+
 router.use(routesV1);
 
 
