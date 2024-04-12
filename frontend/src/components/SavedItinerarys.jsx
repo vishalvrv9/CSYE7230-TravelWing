@@ -10,6 +10,7 @@ import {
   Paper,
   Divider,
   TablePagination,
+  Button
 } from '@mui/material';
 import { useUserAuth } from '../context/UserAuthContext';
 
@@ -20,9 +21,31 @@ const ItineraryList = () => {
   const [selectedItinerary, setSelectedItinerary] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const userEmail = "sravanti.kanchi111@gmail.com";
   const [searchDate, setSearchDate] = useState('');
   const { user } = useUserAuth();
+
+  const handleSendMail = async () => {
+    try {
+      // Logic to send email with selected itinerary details
+      // Replace the following with your actual email sending code
+      const emailContent = `Selected Itinerary: ${selectedItinerary.title}\nSource: ${selectedItinerary.source}\nDestination: ${selectedItinerary.destination}`;
+      const response = await fetch('http://localhost:8080/api/v1/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify( {
+          to: user.user.email,
+          data: selectedItinerary
+        }),
+      });
+      if (!response.ok) throw new Error('Failed to send email');
+      alert('Email sent successfully');
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send email');
+    }
+  };
 
   useEffect(() => {
     const fetchItineraries = async () => {
@@ -162,6 +185,11 @@ const ItineraryList = () => {
             <Typography variant="subtitle1">Select an itinerary to view details.</Typography>
           )}
         </Paper>
+
+        <Button variant="contained" color="primary" onClick={handleSendMail}>
+          Send Mail
+        </Button>
+
       </Grid>
     </Grid>
   );
