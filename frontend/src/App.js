@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import About from './components/About';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Saved from './components/SavedItinerarys';
+
 import Itinerary from './components/TravelPlanner';
 
 
@@ -25,6 +27,8 @@ function App() {
           <Route path="/itinerary" element={<Itinerary />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/saved" element={<Saved />} />
+
         </Routes>
     </Router>
     </div>

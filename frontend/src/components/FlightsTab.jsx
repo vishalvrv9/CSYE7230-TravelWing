@@ -147,12 +147,12 @@ function FlightsTab({ country, setCountry,destCountry, setDestinationCountry, st
       width: '30%', 
       m: 2, 
     }}}>
-            <Button variant="outlined" onClick={handleReset} sx={{ marginTop: 2 }}>
+            <Button variant="outlined" onClick={handleReset} sx={{ m: 2 }}>
               Reset
             </Button>
             <Button
     variant="contained"
-    sx={{ marginTop: 2 }} onClick = {handleSearchFlights}
+    sx={{ m: 2 }} onClick = {handleSearchFlights}
   > Fetch Flights! </Button>
     </Box>
     {flightOffers && flightOffers.length > 0 && (

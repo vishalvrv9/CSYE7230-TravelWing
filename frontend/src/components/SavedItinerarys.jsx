@@ -29,7 +29,7 @@ const ItineraryList = () => {
       
 
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/users/${encodeURIComponent(user.email)}/itineraries`, {
+        const response = await fetch(`http://localhost:8080/api/v1/users/${encodeURIComponent(user.user.email)}/itineraries`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
