@@ -2,13 +2,49 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Alert, Button, TextField, Box, Typography } from "@mui/material";
 import { useUserAuth } from "../context/UserAuthContext";
+import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
+import "../css/SignUp.css";
+
+// Motion Input component
+const MotionInput = ({ id, label, type, value, setValue, placeholder }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
+
+  const background = useMotionTemplate`
+    radial-gradient(circle at ${mouseX}px ${mouseY}px, #ffffff20 0%, #ffffff00 80%)`;
+
+  return (
+    <div className="form-group" onMouseMove={handleMouseMove} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+      <label htmlFor={id} className="form-label">{label}</label>
+      <motion.input
+        type={type}
+        className="form-input"
+        id={id}
+        name={id}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={placeholder}
+        required
+        style={{ background: isHovered ? background : 'none' }}
+      />
+    </div>
+  );
+};
+
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fname, setFname] = useState(""); // State for first name
   const [lname, setLname] = useState(""); // State for last name
-  const [uid, setUid] = useState(""); // State for user id
   const [error, setError] = useState("");
   const { signUp, googleSignIn } = useUserAuth();
   let navigate = useNavigate();
@@ -34,95 +70,68 @@ const Signup = () => {
     }
   };
 
+ 
+return (
+  <div className="modal-backdrop">
+  <img src="/flight1.png" alt="Flight" className="flying-flight flight1" />
+  <img src="/flight2.png" alt="Flight" className="flying-flight flight2" />
+  <img src="/flight1.png" alt="Flight" className="flying-flight flight3" />
+  <img src="/flight2.png" alt="Flight" className="flying-flight flight4" />
+      <div className="welcome-modal">
+        <h2>Seize the Skies with TravelWing!</h2>
+        <p>Sign up and Soar</p>
+        
+  <div className="signup-form-container">
+    {error && <div className="alert alert-error">{error}</div>}
+    <form onSubmit={handleSubmit} className="signup-form">
+    <div className="name-fields">
+      <MotionInput
+        id="fname"
+        label="First Name"
+        type="text"
+        value={fname}
+        setValue={setFname}
+        placeholder="Enter your first name"
+      />
+      <MotionInput
+        id="lname"
+        label="Last Name"
+        type="text"
+        value={lname}
+        setValue={setLname}
+        placeholder="Enter your last name"
+      />
+    </div>
+      <MotionInput
+        id="email"
+        label="Email"
+        type="email"
+        value={email}
+        setValue={setEmail}
+        placeholder="Enter your email"
+      />
+      <MotionInput
+        id="password"
+        label="Password"
+        type="password"
+        value={password}
+        setValue={setPassword}
+        placeholder="Enter your password"
+      />
+      <button type="submit" className="submit-btn" onClick={handleSubmit}>Sign Up</button>
+      <div className="divider">OR</div>
+      <button type="button" className="social-signup google-signup">
+            <FaGoogle /> Sign up with Google
+          </button>
+          <button type="button" className="social-signup facebook-signup">
+            <FaFacebook /> Sign up with Facebook
+      </button>    
+    </form>
+  </div>
+  </div>
 
-  return (
-    <Box sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-
-      {error && <Alert severity="error">{error}</Alert>}
-
-      <Box
-        component="form"
-        noValidate
-        onSubmit={handleSubmit}
-        sx={{ mt: 1 }}
-      >
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="fname"
-          label="First Name"
-          name="fname"
-          autoComplete="fname"
-          autoFocus
-          onChange={(e) => setFname(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="lname"
-          label="Last Name"
-          name="lname"
-          autoComplete="lname"
-          onChange={(e) => setLname(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Sign up
-        </Button>
-      </Box>
-
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 2, backgroundColor: '#DB4437', '&:hover': { backgroundColor: '#DB4437' } }} // Google color
-        onClick={handleGoogleSignIn}
-      >
-        Sign up with Google
-      </Button>
-
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 2, backgroundColor: '#4267B2', '&:hover': { backgroundColor: '#4267B2' } }} // Facebook color
-        onClick={handleGoogleSignIn}
-      >
-        Sign up with Facebook
-      </Button>
-
-      <Box mt={2}>
-        <Typography variant="body2">
-          Already have an account? <Link to="/login">Log In</Link>
-        </Typography>
-      </Box>
-    </Box>
-  );
+</div>
+);
 };
 
 export default Signup;
