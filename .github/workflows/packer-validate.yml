@@ -7,7 +7,7 @@ on:
 
 jobs:
   validate:
-    name: Validate Packer Template
+    name: Validate Packer Template to build AMI
     runs-on: ubuntu-latest
 
     steps:
@@ -32,7 +32,7 @@ jobs:
            cd backend
            packer init .
     
-      - name: Packer fmt
+      - name: Packer Validation
         run: |
            echo `pwd`
            cd backend
