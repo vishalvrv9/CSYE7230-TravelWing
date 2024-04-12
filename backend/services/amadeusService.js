@@ -42,6 +42,15 @@ const searchFlights = async (
   adults
 ) => {
   const accessToken = await getAccessToken();
+
+  console.log({
+    method: 'get',
+    url: `https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}`,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
   try {
     const response = await axios({
       method: 'get',
