@@ -1,4 +1,5 @@
 # CSYE7230-TravelWing
+![Screenshot 2024-04-12 094957](https://github.com/Sheetalpujarii/CSYE7230-TravelWing/assets/62785078/7ef90dca-f230-4f96-a18b-642cd611568e)
 
 Hi, we are team Travel Wing!
 
