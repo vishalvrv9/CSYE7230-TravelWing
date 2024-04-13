@@ -34,5 +34,4 @@ describe('Navbar', () => {
     expect(screen.getByText('Signup')).toBeInTheDocument();
   });
 
-  
 });
