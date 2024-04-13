@@ -46,6 +46,8 @@ AMADEUS_CLIENT_SECRET=api-keys-from-amadeus
 
 ```
 
+First, Install Backend dependencies using:  ```npm install```
+
 After adding the above details, just run ```npm start``` to start the backend application
 
 ### Frontend
@@ -54,13 +56,19 @@ The frontend code is in two folders
 - ```./frontend```
 - ```./lp```
 
+
 The landing page is created using nextjs to enable efficient and complex server rendered animations. The landing page by default runs on port 3001 and the front end tries to communicate with port 8080 by default (as the backend runs on port 8080 by default as mentioned above)
 
 The front client rendered react components run on port 3000 and the client keeps redirecting between 3000 and 3001 based on implementation and functionality. 
 
-Inorder to run the entire frontend, we need to first go into the ```./lp``` folder and run ```npm run dev``` or run ```npm build && npm start``` and this will start the landing page on port 3001
+Inorder to run the entire frontend, we need to 
+- first go into the ```./lp``` folder
+- install lp dependencies using:  ```npm install```
+- run ```npm run dev``` or run ```npm build && npm start``` and this will start the landing page on port 3001
 
-Then, we need to start a different terminal session and go into the ```./frontend``` folder and run ```npm start``` to run the react client.
+Then, we need to start a different terminal session and go into the ```./frontend``` folder
+- install frontend dependencies using: ```npm install```
+- run ```npm start``` to run the react client.
 
 After that, visit ```http://localhost:3001``` to visite the application
 
