@@ -45,7 +45,6 @@ AMADEUS_CLIENT_ID=api-keys-from-amadeus
 AMADEUS_CLIENT_SECRET=api-keys-from-amadeus
 
 ```
-
 First, Install Backend dependencies using:  ```npm install```
 
 After adding the above details, just run ```npm start``` to start the backend application
@@ -70,7 +69,7 @@ Then, we need to start a different terminal session and go into the ```./fronten
 - install frontend dependencies using: ```npm install```
 - run ```npm start``` to run the react client.
 
-After that, visit ```http://localhost:3001``` to visite the application
+After that, visit ```http://travelwing.online:3001``` to visite the application
 
 
 

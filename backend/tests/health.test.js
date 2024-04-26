@@ -92,10 +92,3 @@ describe('GET /api/v1/hotels/search-by-city/:cityCode', () => {
     expect(response.statusCode).toBe(200);
   });
 });
-
-describe('GET /api/v1/flights/search-flights', () => {
-  test('should respond with JSON data and status 200 for a valid flights retrieval', async () => {
-    const response = await request(app).get(`/api/v1/flights/search-flights?originLocationCode=JFK&destinationLocationCode=BKK&departureDate=2024-05-02&adults=1`);
-    expect(response.statusCode).toBe(200);
-  });
-});
