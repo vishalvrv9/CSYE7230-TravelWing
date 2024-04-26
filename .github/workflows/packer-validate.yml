@@ -27,14 +27,11 @@ jobs:
           current_directory=$(pwd)      
           echo `pwd`
 
-      - name: Navigate to the backend and Check if Packer file exists
+      - name: Check if Packer file exists
         run: |
-           cd backend
            packer init .
     
       - name: Packer Validation
         run: |
-           echo `pwd`
-           cd backend
            echo `pwd`
            packer validate ami.us-east-1.pkr.hcl           
