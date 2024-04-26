@@ -71,7 +71,7 @@ const loadingMessages = [
         try {
         
           setIsGenerating(true);
-          const apiEndpoint = 'http://localhost:8080/api/v1/generateItinerary';
+          const apiEndpoint = 'http://travelwing.online:8080/api/v1/generateItinerary';
           const requestBody = {
             source: source, // Assuming 'source' is a fixed value as per your curl command
             destination: country, // assuming country is the state variable for destination
@@ -137,7 +137,7 @@ const loadingMessages = [
       try {
         setSave(true); // Indicate loading state
         
-        const apiEndpoint = 'http://localhost:8080/api/v1/createItinerary';
+        const apiEndpoint = 'http://travelwing.online:8080/api/v1/createItinerary';
         const requestBody = {
           source: source,
           destination: country,

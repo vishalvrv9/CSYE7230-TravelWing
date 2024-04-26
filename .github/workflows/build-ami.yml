@@ -44,6 +44,7 @@ jobs:
 
     - name: Packer Validation
       run: |
+        echo `pwd`
         packer validate ami.us-east-1.pkr.hcl 
 
     - name: Build AMI

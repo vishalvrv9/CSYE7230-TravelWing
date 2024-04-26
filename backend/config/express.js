@@ -30,7 +30,7 @@ app.use(helmet());
 
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors({ 
-    origin: 'http://localhost:3000', // Adjust this to match the domain of your frontend
+    origin: 'http://travelwing.online:3000', // Adjust this to match the domain of your frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed request methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Specify allowed headers
 }));

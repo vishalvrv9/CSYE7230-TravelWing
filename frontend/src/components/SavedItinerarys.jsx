@@ -29,7 +29,7 @@ const ItineraryList = () => {
       // Logic to send email with selected itinerary details
       // Replace the following with your actual email sending code
       const emailContent = `Selected Itinerary: ${selectedItinerary.title}\nSource: ${selectedItinerary.source}\nDestination: ${selectedItinerary.destination}`;
-      const response = await fetch('http://localhost:8080/api/v1/send-email', {
+      const response = await fetch('http://travelwing.online:8080/api/v1/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const ItineraryList = () => {
       
 
       try {
-        const response = await fetch(`http://localhost:8080/api/v1/users/${encodeURIComponent(user.user.email)}/itineraries`, {
+        const response = await fetch(`http://travelwing.online:8080/api/v1/users/${encodeURIComponent(user.user.email)}/itineraries`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });

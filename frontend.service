@@ -1,0 +1,17 @@
+[Unit]
+Description=Frontend Service
+After=webapplication.service
+Requires=webapplication.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/admin/WebApp/webapp/frontend
+ExecStartPre=/usr/bin/npm install
+ExecStart=/usr/bin/npm start
+Restart=always
+RestartSec=35
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

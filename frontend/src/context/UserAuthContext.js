@@ -34,7 +34,7 @@ export function UserAuthContextProvider({ children }) {
   const fetchUserDetails = async (email) => {
     try {
       console.log("Hello fetchUserDetails - coming in function fetchUserDetails");
-      const response = await fetch(`http://localhost:8080/getUserDetails/${email}`);
+      const response = await fetch(`http://travelwing.online:8080/getUserDetails/${email}`);
 
       if (response.status === 401 || response.status === 403) {
         // Handle the expired session
@@ -72,7 +72,7 @@ function handleSessionExpired() {
   async function logIn(email, password) {
     console.log("Hello logIn - coming in function logIn");
     // const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const userCredential = await fetch('http://localhost:8080/login', {
+    const userCredential = await fetch('http://travelwing.online:8080/login', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -102,7 +102,7 @@ function handleSessionExpired() {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     
     // console.log("User signed up successfully:", userCredential.user);
-    const apiResponse = await fetch('http://localhost:8080/signup', {
+    const apiResponse = await fetch('http://travelwing.online:8080/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ function handleSessionExpired() {
       };
   
       // Send the user data to your backend API for MongoDB storage
-      const response = await fetch('http://localhost:8080/google-signup', {
+      const response = await fetch('http://travelwing.online:8080/google-signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
