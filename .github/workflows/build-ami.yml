@@ -38,7 +38,7 @@ jobs:
       shell: bash
 
 
-    - name: Navigate to the backend and Check if Packer file exists
+    - name: Check if Packer file exists
       run: |
         packer init .
 
