@@ -41,7 +41,7 @@ const secGroup = new aws.ec2.SecurityGroup("example-secgroup", {
 });
 
 // Specify AMI ID
-const amiId = "ami-0cbc0ab18f27fdaf7"; 
+const amiId = "ami-0c9417c2fcac08891"; 
 
 // Create an EC2 instance
 const instance = new aws.ec2.Instance("ec2", {
