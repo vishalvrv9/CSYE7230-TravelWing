@@ -18,7 +18,7 @@ const sendEmailWithPDF = async (data) => {
     // Prepare email data
     const emailData = {
       from:  `Excited User <support@skanchi.site>`,
-      to: 'sravanti.kanchi@gmail.com',
+      to: data.to,
       subject: 'TravelWing: your Generated Itinerary',
       text: "Hello! Thank you for choosing Travel Wing for your travel needs. We're thrilled to assist you in planning your journey. Please find the attached itinerary PDF for your reference. If you have any questions or need further assistance, feel free to reach out to us. Safe travels!",
       attachment: fs.createReadStream(pdfFilePath)
