@@ -34,7 +34,8 @@ jobs:
         echo "MONGODB_URI=mongodb://127.0.0.1:27017/test" >> .env
         echo "AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}" >> .env
         echo "AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}" >> .env
-        echo  "CHATGPT_KEY=TEST" >> .env
+        echo "CHATGPT_KEY=${{ secrets.CHATGPT_KEY}}" >> .env
+        echo "MAILGUN_API_KEY=${{secrets.MAILGUN_API_KEY}}"
         echo "env file created"
         cat .env
 
