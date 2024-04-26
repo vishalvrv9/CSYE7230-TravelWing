@@ -1,13 +1,8 @@
 const fs = require('fs');
 const pdf = require('html-pdf');
 const axios = require('axios');
-<<<<<<< Updated upstream
-
-const auth = { username: "app", password: "b0fdf7e556051229ef144d593a4e1d664-4b670513-7e34efbc" };
-=======
 const { api } = require('../config/vars');
 const auth = { username: "app", password: api};
->>>>>>> Stashed changes
 
 
 const sendEmailWithPDF = async (data) => {
