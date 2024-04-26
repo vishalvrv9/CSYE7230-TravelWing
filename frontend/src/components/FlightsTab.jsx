@@ -3,7 +3,7 @@ import React from 'react';
 import { Box, TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import FlightTable from '../components/FlightsDetails';
 
-function FlightsTab({ country, setCountry,destCountry, setDestinationCountry, startDate, setStartDate, endDate, setEndDate, travelers, setTravelers, flightOffers, setFlightOffers }) {
+function FlightsTab({ country, setCountry,destCountry, setDestinationCountry, startDate, setStartDate, endDate, setEndDate, travelers, setTravelers, flightOffers, setFlightOffers, source, setSource }) {
 
     const handleReset = () => {
         setCountry('');
@@ -29,12 +29,25 @@ function FlightsTab({ country, setCountry,destCountry, setDestinationCountry, st
         setEndDate(event.target.value);
     };
 
+    const handleSourceChange = (event) => {
+      setSource(event.target.value);
+  };
     const handleTravelersChange = (event) => {
         setTravelers(event.target.value);
     };
     const handleSearchFlights = async () => {
-      const originLocationCode = country;
-      const destinationLocationCode = destCountry;
+
+      const loc = {
+        "Paris": "PAR",
+        "Newyork" : "JfK",
+        "Bangkok" :"BKK",
+         "Bangalore" :"BLR",
+         "Boston" : "BOS"
+      }
+      
+      const originLocationCode = loc[source];
+      ;
+      const destinationLocationCode = loc[country];
       const departureDate = startDate;
       const adults = travelers;
       try {
@@ -79,17 +92,19 @@ function FlightsTab({ country, setCountry,destCountry, setDestinationCountry, st
               <InputLabel id="country-select-label">Select Country</InputLabel>
               <Select
                 labelId="country-select-label"
-                value={country}
+                value={source}
                 label="Select Country"
-                onChange={handleCountryChange}
+                onChange={handleSourceChange}
               >
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value="PAR">Paris</MenuItem>
-                <MenuItem value="JFK">New York</MenuItem>
-                <MenuItem value="BKK">Bangkok</MenuItem>
-                <MenuItem value="BLR">Bangalore</MenuItem>
+                <MenuItem value="Paris">Paris</MenuItem>
+                <MenuItem value="Newyork">New York</MenuItem>
+                <MenuItem value="Bangkok">Bangkok</MenuItem>
+                <MenuItem value="Bangalore">Bangalore</MenuItem>
+                <MenuItem value="Boston">Boston</MenuItem>
+
               </Select>
             </FormControl>
 
@@ -97,17 +112,17 @@ function FlightsTab({ country, setCountry,destCountry, setDestinationCountry, st
                 <InputLabel id="destination-country-select-label">Select Destination Country</InputLabel>
                 <Select
                     labelId="destination-country-select-label"
-                    value={destCountry}
+                    value={country}
                     label="Select Destination Country"
-                    onChange={handleDestinationCountryChange}
+                    onChange={handleCountryChange}
                 >
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value="PAR">Paris</MenuItem>
-                    <MenuItem value="JFK">New York</MenuItem>
-                    <MenuItem value="BKK">Bangkok</MenuItem>
-                    <MenuItem value="BLR">Bangalore</MenuItem>
+                    <MenuItem value="Paris">Paris</MenuItem>
+                    <MenuItem value="Newyork">New York</MenuItem>
+                    <MenuItem value="Bangkok">Bangkok</MenuItem>
+                    <MenuItem value="Bangalore">Bangalore</MenuItem>
                 </Select>
             </FormControl>
 

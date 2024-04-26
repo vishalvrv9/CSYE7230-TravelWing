@@ -28,7 +28,17 @@ function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setE
         setTravelers(event.target.value);
     };
     const handleSearchHotels = async () => {
-      const locationCode = country;
+
+      const loc = {
+
+        "Paris": "PAR",
+        "Newyork" : "JfK",
+        "Bangkok" :"BKK",
+         "Bangalore" :"BLR",
+         "Boston" : "BOS"
+      }
+
+      const locationCode = loc[country];
       try {
           // Append the query parameters to the URL
           const url = `http://travelwing.online:8080/api/v1/hotels/search-by-city/${locationCode}`;
@@ -75,8 +85,8 @@ function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setE
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value="PAR">Paris</MenuItem>
-                <MenuItem value="JfK">Newyork</MenuItem>
+                <MenuItem value="Paris">Paris</MenuItem>
+                <MenuItem value="Newyork">Newyork</MenuItem>
               </Select>
             </FormControl>
             <TextField
