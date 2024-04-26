@@ -1,8 +1,13 @@
 const fs = require('fs');
 const pdf = require('html-pdf');
 const axios = require('axios');
+<<<<<<< Updated upstream
 
 const auth = { username: "app", password: "b0fdf7e556051229ef144d593a4e1d664-4b670513-7e34efbc" };
+=======
+const { api } = require('../config/vars');
+const auth = { username: "app", password: api};
+>>>>>>> Stashed changes
 
 
 const sendEmailWithPDF = async (data) => {
@@ -11,13 +16,13 @@ const sendEmailWithPDF = async (data) => {
     const pdfContent = await generatePDF(data.data);
 
     // Create a temporary file for the PDF
-    const pdfFilePath = 'temp.pdf';
+    const pdfFilePath = 'itinerary.pdf';
     fs.writeFileSync(pdfFilePath, pdfContent);
 
 
     // Prepare email data
     const emailData = {
-      from:  `Excited User <support@sravantikanchicsye6225.site>`,
+      from:  `Excited User <support@skanchi.site>`,
       to: 'sravanti.kanchi@gmail.com',
       subject: 'TravelWing: your Generated Itinerary',
       text: "Hello! Thank you for choosing Travel Wing for your travel needs. We're thrilled to assist you in planning your journey. Please find the attached itinerary PDF for your reference. If you have any questions or need further assistance, feel free to reach out to us. Safe travels!",
@@ -25,7 +30,7 @@ const sendEmailWithPDF = async (data) => {
     };
 
     
-   await axios.post(`https://api.mailgun.net/v3/sravantikanchicsye6225.site/messages`, emailData, {
+   const response = await axios.post(`https://api.mailgun.net/v3/skanchi.site/messages`, emailData, {
       auth,
       headers: {
         'Content-Type': 'multipart/form-data',
