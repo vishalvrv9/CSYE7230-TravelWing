@@ -1,0 +1,17 @@
+[Unit]
+Description=Backend Service
+After=network.target cloud-final.service
+Wants=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/admin/WebApp/webapp/backend
+ExecStart=/usr/bin/node /home/admin/WebApp/webapp/backend/index.js
+EnvironmentFile=/home/admin/WebApp/webapp/backend/.env
+Restart=always
+RestartSec=35
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

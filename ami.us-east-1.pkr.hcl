@@ -21,7 +21,7 @@ variable "ssh_username" {
 variable "source_ami" {
   type    = string
   default = "ami-058bd2d568351da34"
-}
+} 
 
 variable "owners" {
   type    = string
@@ -71,6 +71,11 @@ build {
   provisioner "file" {
     source      = "./webapplication.service"
     destination = "/tmp/webapplication.service"
+  }
+
+  provisioner "file" {
+    source      = "./frontend.service"
+    destination = "/tmp/frontend.service"
   }
 
   provisioner "shell" {

@@ -31,7 +31,7 @@ function HotelsTab({ country, setCountry, startDate, setStartDate, endDate, setE
       const locationCode = country;
       try {
           // Append the query parameters to the URL
-          const url = `http://localhost:8080/api/v1/hotels/search-by-city/${locationCode}`;
+          const url = `http://travelwing.online:8080/api/v1/hotels/search-by-city/${locationCode}`;
 
           const response = await fetch(url, {
               method: 'GET', // Specify the method as GET

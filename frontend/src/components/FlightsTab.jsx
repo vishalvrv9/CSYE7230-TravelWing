@@ -39,7 +39,7 @@ function FlightsTab({ country, setCountry,destCountry, setDestinationCountry, st
       const adults = travelers;
       try {
           // Append the query parameters to the URL
-          const url = `http://localhost:8080/api/v1/flights/search-flights?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}`;
+          const url = `http://travelwing.online:8080/api/v1/flights/search-flights?originLocationCode=${originLocationCode}&destinationLocationCode=${destinationLocationCode}&departureDate=${departureDate}&adults=${adults}`;
 
           const response = await fetch(url, {
               method: 'GET', // Specify the method as GET
