@@ -10,4 +10,5 @@ module.exports = {
   env: process.env.NODE_ENV,
   chatgptKey: process.env.CHATGPT_KEY,
   uri: process.env.MONGODB_URI,
+  api: process.env.MAILGUN_API_KEY
 };
